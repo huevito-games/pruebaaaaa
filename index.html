@@ -6,3 +6,58 @@
 </head>
 <body style="margin: 0px; height: 100vh;"><iframe src="https://huevitohosting.wixsite.com/huevito-games" style="border: none; width: 100%; height: 100%; margin: 0px;"></iframe>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const page1Link = document.getElementById("page1-link");
+      const page2Link = document.getElementById("page2-link");
+      const hostname = window.location.hostname;
+
+      const linkMap = {
+        "jman1593.github.io": { page1: "/#", page2: "/strongdog2/index.html" },
+        "strongdog-1.vercel.app": {
+          page1: "https://strongdog-1.vercel.app",
+          page2: "https://strongdog2.vercel.app",
+        },
+        "strongdog2.vercel.app": {
+          page1: "https://strongdog-1.vercel.app",
+          page2: "https://strongdog2.vercel.app",
+        },
+        "strongdog.netlify.app": {
+          page1: "https://strongdog.netlify.app",
+          page2: "https://strongdog2.netlify.app",
+        },
+        "strongdog2.netlify.app": {
+          page1: "https://strongdog.netlify.app",
+          page2: "https://strongdog2.netlify.app",
+        },
+        "mathcord.netlify.app": {
+          page1: "https://mathcord.netlify.app",
+          page2: "https://mathcord2.netlify.app",
+        },
+        "mathcord2.netlify.app": {
+          page1: "https://mathcord.netlify.app",
+          page2: "https://mathcord2.netlify.app",
+        },
+        "strongdog.onrender.com": {
+          page1: "https://strongdog.onrender.com",
+          page2: "https://strongdog2.onrender.com",
+        },
+        "stroongdog.netlify.app": {
+          page1: "https://stroongdog.netlify.app",
+          page2: "https://stroongdog2.netlify.app",
+        },
+        "stroongdog2.netlify.app": {
+          page1: "https://stroongdog.netlify.app",
+          page2: "https://stroongdog2.netlify.app",
+        },
+      };
+
+      for (const key in linkMap) {
+        if (hostname.includes(key)) {
+          page1Link.href = linkMap[key].page1;
+          page2Link.href = linkMap[key].page2;
+          break;
+        }
+      }
+    });
+  </script>
