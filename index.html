@@ -4,8 +4,541 @@
   <title>Recibidos</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+</head>
+  <body>
+    <div
+      id="secretLink"
+      title="Secret Menu"
+      style="
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 10px;
+        height: 10px;
+        cursor: pointer;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      "
+    ></div>
+    <script>
+      window.addEventListener("load", function () {
+        const secretLink = document.getElementById("secretLink");
+        secretLink.addEventListener("click", function () {
+          window.location.href = "secret-menu.html";
+        });
+      });
+    </script>
 
-<script>
+    <div class="navbar">
+      <div class="menu-icon" id="menuIcon">&#9776;</div>
+      <a href="index.html" class="logo">StrongDog<span class="xp">XP</span></a>
+
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="Search for games..."
+          id="searchInput"
+          autocomplete="off"
+        />
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+    <div class="updates-text-container">
+      <p class="updates-paragraph-text">The save manager has been added to strongdog! It is still a work in progress, but from what has been tested it works. To access it go into the sidebar and scroll to the bottom.</p>
+    </div>
+    <div class="modal" id="popupModal">
+      <div class="modal-content">
+        <span class="modal-close" id="closeModal">&times;</span>
+        <p>
+          The strongdog discord server is a place for strongdog users to chill,
+          play games together, request ideas, and have fun!
+        </p>
+        <p>
+          If you want to help on StrongDog, there is a chat where you can get
+          help downloading games, and you can upload games YOU download to add
+          to StrongDog! (And yes, you WILL get credit for downloading games)
+        </p>
+        <p>
+          Ready to join? Click
+          <a href="https://discord.gg/pWjfQ4Sz5c" target="_blank">here</a> to
+          join the Discord server!
+        </p>
+      </div>
+    </div>
+    <h2 style="text-align: center"><strong>Top 20</strong></h2>
+    <div class="games-grid" id="topGameList"></div>
+
+    <h2 style="text-align: center"><strong>All</strong></h2>
+    <div class="games-grid" id="allGameList"></div>
+
+    <h2 style="text-align: center"><strong>StrongDogXP LLC</strong></h2>
+
+    <div class="news-container">
+      <div class="news">
+        <div class="credits-item">
+          <div class="credits-role">CEO</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Developers</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/JamesMeadows4"
+              target="_blank"
+              class="credits-link"
+              >James Meadows</a
+            >
+            <span>|</span>
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Game Downloaders</div>
+          <div class="credits-names">
+            <a
+              href="https://github.com/jman1593"
+              target="_blank"
+              class="credits-link"
+              >Joshua Pettit</a
+            >
+            <span>|</span>
+            <a
+              href="https://maxwellstevenson.com"
+              target="_blank"
+              class="credits-link"
+              >Maxwell Stevenson</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">Other Links</div>
+          <div class="credits-names">
+            <a
+              href="https://strongdogxp.github.io"
+              target="_blank"
+              class="credits-link"
+              >mathcordxp.github.io</a
+            >
+            <span>|</span>
+            <a
+              href="https://strongdogxp.github.io"
+              target="_blank"
+              class="credits-link"
+              >strongdogxp.github.io</a
+            >
+            <span>|</span>
+            <a
+              href="https://jman1593.github.io"
+              target="_blank"
+              class="credits-link"
+              >jman1593.github.io</a
+            >
+            <span>|</span>
+            <a
+              href="https://strongdog-1.vercel.app"
+              target="_blank"
+              class="credits-link"
+              >strongdog-1.vercel.app</a
+            >
+            <span>|</span>
+            <a href="https://mathcord.com" target="_blank" class="credits-link"
+              >mathcord.com</a
+            >
+            <span>|</span>
+            <a href="https://strongdog.com" target="_blank" class="credits-link"
+              >strongdog.com</a
+            >
+          </div>
+        </div>
+        <div class="credits-item">
+          <div class="credits-role">MORE UNBLOCKED LINKS ON THE DISCORD</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-menu" id="slideMenu">
+      <div class="categories">
+        <a href="favs.html" class="option-link">Favorites</a>
+        <a href="#" id="randomGame" class="option-link">Random Game</a>
+        <a href="#" id="blockLanschool" class="option-link">Block Lanschool</a>
+        <a href="about.html" class="option-link"
+          >About / Report Bugs / Request Games</a
+        >
+        <a href="./save/" class="option-link">Save manager<span class="new-feature-tag">new</span></a>
+        <a href="https://discord.gg/pWjfQ4Sz5c" class="option-link"
+          >Discord Server</a
+        >
+      </div>
+    </div>
+    <script type="module">
+      import games from "./cards-data.js";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuIcon = document.getElementById("menuIcon");
+        const slideMenu = document.querySelector(".slide-menu");
+        const categories = document.querySelector(".categories");
+
+        menuIcon.addEventListener("click", function (event) {
+          event.stopPropagation();
+          if (slideMenu.style.transform === "translateX(0%)") {
+            slideMenu.style.transform = "translateX(-100%)";
+          } else {
+            slideMenu.style.transform = "translateX(0%)";
+          }
+        });
+
+        window.addEventListener("click", function (event) {
+          if (event.target !== menuIcon && !slideMenu.contains(event.target)) {
+            slideMenu.style.transform = "translateX(-100%)";
+          }
+        });
+
+        auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            const userDetailsContainer = document.createElement("div");
+            userDetailsContainer.className = "user-details-container";
+
+            const profileTopContainer = document.createElement("div");
+            profileTopContainer.className = "profile-top-container";
+
+            const profilePictureContainer = document.createElement("div");
+            profilePictureContainer.className = "profile-picture-container";
+            const profilePictureElement = document.createElement("img");
+            profilePictureElement.className = "profile-picture";
+            profilePictureContainer.appendChild(profilePictureElement);
+
+            const usernameContainer = document.createElement("div");
+            usernameContainer.className = "username-container";
+            const usernameElement = document.createElement("p");
+            usernameElement.className = "username-text";
+            usernameContainer.appendChild(usernameElement);
+
+            profileTopContainer.appendChild(profilePictureContainer);
+            profileTopContainer.appendChild(usernameContainer);
+
+            userDetailsContainer.appendChild(profileTopContainer);
+
+            if (user.photoURL) {
+              profilePictureElement.src = user.photoURL;
+            } else {
+              profilePictureElement.src = "img/default-avatar.png";
+            }
+
+            const userId = user.uid;
+            const userDocRef = db.collection("usernames").doc(userId);
+            const userDoc = await userDocRef.get();
+
+            if (userDoc.exists) {
+              const userData = userDoc.data();
+              usernameElement.textContent = userData.username || "Username";
+            } else {
+              usernameElement.textContent = user.displayName || "Username";
+            }
+            // Fetch total XP from Realtime Database
+            const xpRef = rtdb.ref(`xp/${userId}`);
+            xpRef.once("value", (snapshot) => {
+              let totalXP = 0;
+              if (snapshot.exists()) {
+                totalXP = snapshot.val();
+              } else {
+                totalXP = 0;
+              }
+
+              // Calculate level, tier, and progress
+              const { level, tier, currentXP, xpNeededForNext } =
+                getTierAndProgressFromXP(totalXP);
+
+              const xpContainer = document.createElement("div");
+              xpContainer.className = "xp-container";
+
+              const xpLevelText = document.createElement("div");
+              xpLevelText.className = "xp-level-text";
+              xpLevelText.textContent = `Level ${level}`;
+
+              const xpBar = document.createElement("div");
+              xpBar.className = "xp-bar";
+
+              const xpBarFill = document.createElement("div");
+              xpBarFill.className = "xp-bar-fill";
+              const fillPercent = (currentXP / xpNeededForNext) * 100;
+              xpBarFill.style.width = `${fillPercent}%`;
+
+              const xpBarText = document.createElement("div");
+              xpBarText.className = "xp-bar-text";
+              xpBarText.textContent = `${currentXP}/${xpNeededForNext}`;
+
+              xpBar.appendChild(xpBarFill);
+              xpBar.appendChild(xpBarText);
+              xpContainer.appendChild(xpLevelText);
+              xpContainer.appendChild(xpBar);
+
+              userDetailsContainer.appendChild(xpContainer);
+
+              profilePictureContainer.addEventListener("click", () => {
+                window.location.href = "settings.html";
+              });
+
+              slideMenu.insertBefore(userDetailsContainer, categories);
+
+              const logoutLink = document.createElement("a");
+              logoutLink.href = "#";
+              logoutLink.className = "option-link";
+              logoutLink.textContent = "Log Out";
+              logoutLink.style.backgroundColor = "#dc3545";
+              logoutLink.style.color = "white";
+
+              logoutLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                auth
+                  .signOut()
+                  .then(() => {
+                    window.location.reload();
+                  })
+                  .catch((error) => {
+                    console.error("Error signing out:", error);
+                  });
+              });
+
+              const favoritesLink = categories.querySelector(
+                'a[href="favs.html"]'
+              );
+              categories.insertBefore(logoutLink, favoritesLink);
+
+              try {
+                const accessDocRef = db.collection("access").doc(user.uid);
+                accessDocRef.get().then((accessDoc) => {
+                  if (accessDoc.exists) {
+                    const accessData = accessDoc.data();
+                    if (accessData.tester === true) {
+                      const testGamesLink = document.createElement("a");
+                      testGamesLink.href = "test.html";
+                      testGamesLink.className = "option-link";
+                      testGamesLink.textContent = "Test Games";
+                      testGamesLink.style.backgroundColor = "#28a745";
+                      testGamesLink.style.color = "white";
+                      testGamesLink.style.marginTop = "10px";
+
+                      testGamesLink.addEventListener("mouseover", function () {
+                        testGamesLink.style.backgroundColor = "#218838";
+                      });
+                      testGamesLink.addEventListener("mouseout", function () {
+                        testGamesLink.style.backgroundColor = "#28a745";
+                      });
+
+                      categories.insertBefore(testGamesLink, favoritesLink);
+                    }
+                  }
+                });
+              } catch (error) {
+                console.error();
+              }
+            }); // end xpRef.once
+          } else {
+            const userDetailsContainer = document.createElement("div");
+            userDetailsContainer.className = "user-details-container";
+
+            const notLoggedInContainer = document.createElement("div");
+            notLoggedInContainer.className = "username-container";
+
+            const notLoggedInText = document.createElement("p");
+            notLoggedInText.className = "username-text";
+            notLoggedInText.textContent = "Not logged in";
+
+            notLoggedInContainer.appendChild(notLoggedInText);
+
+            const loginButton = document.createElement("button");
+            loginButton.textContent = "Log In";
+            loginButton.style.backgroundColor = "#007bff";
+            loginButton.style.color = "white";
+            loginButton.style.border = "none";
+            loginButton.style.padding = "10px 20px";
+            loginButton.style.fontSize = "16px";
+            loginButton.style.borderRadius = "5px";
+            loginButton.style.cursor = "pointer";
+            loginButton.style.marginTop = "5px";
+
+            loginButton.addEventListener("click", function () {
+              window.location.href = "login.html";
+            });
+
+            userDetailsContainer.style.display = "flex";
+            userDetailsContainer.style.flexDirection = "column";
+            userDetailsContainer.style.alignItems = "center";
+            userDetailsContainer.style.paddingBlock = "20px";
+
+            userDetailsContainer.appendChild(notLoggedInContainer);
+            userDetailsContainer.appendChild(loginButton);
+            slideMenu.insertBefore(userDetailsContainer, categories);
+          }
+
+          categories
+            .querySelector("#randomGame")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              handleRandomGameClick();
+            });
+
+          categories
+            .querySelector("#blockLanschool")
+            .addEventListener("click", function (e) {
+              e.preventDefault();
+              handleBlockLanschoolClick();
+            });
+
+          function handleRandomGameClick() {
+            if (games.length > 0) {
+              const randomIndex = Math.floor(Math.random() * games.length);
+              const randomGamePath = games[randomIndex].href;
+              window.location.href = randomGamePath;
+            } else {
+              console.error("No game paths available for selection.");
+            }
+          }
+
+          function handleBlockLanschoolClick() {
+            var url = "https://strongdogxp.github.io";
+            var newTab = window.open();
+            newTab.document.write(`
+              <html>
+                <body style="margin: 0; height: 100vh;">
+                  <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+                </body>
+              </html>
+            `);
+            newTab.document.close();
+          }
+        });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const discordLink = document.getElementById("discordLink");
+        const modal = document.getElementById("popupModal");
+        const closeModal = document.getElementById("closeModal");
+
+        if (discordLink) {
+          discordLink.addEventListener("click", function () {
+            modal.style.display = "flex";
+          });
+        }
+
+        if (closeModal) {
+          closeModal.addEventListener("click", function () {
+            modal.style.display = "none";
+          });
+        }
+
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+    </script>
+    <script type="module">
+      import games from "./cards-data.js";
+      import { siteMapping } from "./site-mapping.js";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-bar");
+        const searchResults = document.getElementById("searchResults");
+
+        if (!searchInput || !searchResults) {
+          console.error("Search input or results container not found.");
+          return;
+        }
+
+        searchInput.addEventListener("focus", updateSearchResults);
+        searchInput.addEventListener("input", updateSearchResults);
+
+        document.addEventListener("click", function (event) {
+          if (
+            !searchInput.contains(event.target) &&
+            !searchResults.contains(event.target)
+          ) {
+            searchResults.style.display = "none";
+          }
+        });
+
+        function updateSearchResults() {
+          const searchText = searchInput.value.toLowerCase();
+          const filteredGames = games
+            .filter((game) => game.name.toLowerCase().includes(searchText))
+            .slice(0, 7);
+
+          searchResults.innerHTML = "";
+          if (filteredGames.length === 0) {
+            searchResults.style.display = "none";
+            return;
+          }
+
+          const currentURL = window.location.href;
+          let matchedKey = null;
+
+          for (const key in siteMapping) {
+            if (currentURL.includes(key)) {
+              matchedKey = key;
+              break;
+            }
+          }
+
+          if (!matchedKey) {
+            console.warn(
+              `No site mapping found for current URL: ${currentURL}`
+            );
+          }
+
+          filteredGames.forEach((game) => {
+            const { id, imgSrc, name, page } = game;
+            const adjustedHref = `./play/?id=${id}`; // Only updated the href to use the game ID
+            let adjustedImgSrc = `./img/${imgSrc}`;
+
+            if (page >= 2 && matchedKey) {
+              const pageIndex = page - 2;
+              const pageBaseURLs = siteMapping[matchedKey];
+
+              if (pageBaseURLs && pageIndex < pageBaseURLs.length) {
+                const pageBaseURL = pageBaseURLs[pageIndex];
+                const adjustedImgPath = imgSrc.replace(/^\.\//, "");
+                adjustedImgSrc = `${pageBaseURL}/img/${adjustedImgPath}`;
+              } else {
+                console.warn(
+                  `No site mapping found for page ${page} on hostname: ${matchedKey}`
+                );
+              }
+            }
+
+            const resultLink = document.createElement("a");
+            resultLink.href = adjustedHref; // Use the new ID-based path
+            resultLink.innerHTML = `
+            <img src="${adjustedImgSrc}" alt="${name}">
+            <span>${name}</span>
+        `;
+            searchResults.appendChild(resultLink);
+          });
+
+          searchResults.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const page1Link = document.getElementById("page1-link");
       const page2Link = document.getElementById("page2-link");
@@ -57,6 +590,62 @@
           page2Link.href = linkMap[key].page2;
           break;
         }
+      }
+    });
+  </script>
+  <script>
+    document
+      .getElementById("secretLink")
+      .addEventListener("click", function () {
+        window.location.href = "secret-menu.html";
+      });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const discordLink = document.getElementById("discordLink");
+      const modal = document.getElementById("popupModal");
+      const closeModal = document.getElementById("closeModal");
+
+      if (discordLink) {
+        discordLink.addEventListener("click", function () {
+          modal.style.display = "flex";
+        });
+      }
+
+      if (closeModal) {
+        closeModal.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
+      }
+
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
+  </script>
+  <script type="module">
+    import games from "./cards-data.js";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const randomGameButton = document.getElementById("randomGame");
+
+      function handleRandomGameClick() {
+        if (games.length > 0) {
+          const randomIndex = Math.floor(Math.random() * games.length);
+          const randomGamePath = games[randomIndex].href;
+          window.location.href = randomGamePath;
+        } else {
+          console.error("No game paths available for selection.");
+        }
+      }
+
+      if (randomGameButton) {
+        randomGameButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          handleRandomGameClick();
+        });
       }
     });
   </script>
